@@ -24,7 +24,7 @@ export class News extends Component {
       page: 1
     }
   }
-  async componentDidMount() {
+   upadate= async()=>{
     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4979275d5c504207b3f3b16f543271d8&page=1&pageSize=${this.props.pageSize}`;
     this.setState({loading: true})
     let data = await fetch(url);
@@ -32,43 +32,34 @@ export class News extends Component {
     this.setState({loading: false})
     this.setState({ articles: parsdata.articles, totalResults: parsdata.totalResults,loading: false })
   }
+  async componentDidMount() {
+    this.upadate();
+  }
+  tocapital=(string)=>{
+    return string.charAt(0).toUpperCase()+string.slice(1);
+  }
   handleNext = async () => {
-    if (!(Math.ceil(this.state.totalResults /this.props.pageSize)) < this.state.page + 1) {
-      console.log(this.state.totalResults/this.props.pageSize);
-      console.log(this.state.page + 1);
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4979275d5c504207b3f3b16f543271d8&page=${this.state.page + 1} &pageSize=${this.props.pageSize}`;
-      this.setState({loading: true})
-      let data = await fetch(url);
-      let parsdata = await data.json();
-      this.setState({loading: false})      
-      this.setState({ articles: parsdata.articles })
       this.setState({
-        page: this.state.page + 1,
-        articles: parsdata.articles
+        page: this.state.page + 1
       })
-    }
+      this.upadate();
   }
   handlePre = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4979275d5c504207b3f3b16f543271d8&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
-    let data = await fetch(url);
-    this.setState({loading: true})
-    let parsdata = await data.json();
-    this.setState({ articles: parsdata.articles })
-    this.setState({loading: false})
     this.setState({
-      page: this.state.page - 1,
-      articles: parsdata.articles
+      page: this.state.page - 1
     })
+    this.upadate();
     console.log("pre");
   }
   render() {
     return (
       <div className='container my-3'>
+          <h1>Today's Top {this.tocapital(this.props.category)} Headlines</h1>
         {this.state.loading && <Loading/>}
         <div className='row' >
           {!this.state.loading && this.state.articles.map((element) => {
             return <div className='col-md-4' key={element.url}>
-              <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url} />
+              <NewsItem title={element.title} author={element.author} date={element.publishedAt} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url} />
 
             </div>
           })}

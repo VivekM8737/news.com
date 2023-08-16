@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 
 export class App extends Component {
+  pageSize=9;
+  country='in';
   render() {
     return (
 
@@ -16,13 +18,13 @@ export class App extends Component {
         <div><Navbar />
         </div>
         <Routes>
-          <Route path="/" element={<News key="general" country={'in'} category={'general'} pageSize={9} />} />
-          <Route path="/business" element={<News key="business" country={'in'} category={'business'} pageSize={9} />} />
-          <Route path="/sports" element={<News key="sports" country={'in'} category={'sports'} pageSize={9} />} />
-          <Route path="/science" element={<News key="science" country={'in'} category={'science'} pageSize={9} />} />
-          <Route path="/technology" element={<News key="technology" country={'in'} category={'technology'} pageSize={9} />} />
-          <Route path="/entertainment" element={<News key="entertainment" country={'in'} category={'entertainment'} pageSize={9} />} />
-          <Route path="/health" element={<News key="health" country={'in'} category={'health'} pageSize={9} />} />
+          <Route path="/" element={<News key="general" country={this.country} category={'general'} pageSize={this.pageSize} />} />
+          <Route path="/business" element={<News key="business" country={this.country} category={'business'} pageSize={this.pageSize} />} />
+          <Route path="/sports" element={<News key="sports" country={this.country} category={'sports'} pageSize={this.pageSize} />} />
+          <Route path="/science" element={<News key="science" country={this.country} category={'science'} pageSize={this.pageSize} />} />
+          <Route path="/technology" element={<News key="technology" country={this.country} category={'technology'} pageSize={this.pageSize} />} />
+          <Route path="/entertainment" element={<News key="entertainment" country={this.country} category={'entertainment'} pageSize={this.pageSize} />} />
+          <Route path="/health" element={<News key="health" country={this.country} category={'health'} pageSize={this.pageSize} />} />
         </Routes>
       </Router>
 
