@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Navbar } from './component/Navbar'
-import News from './component/News'
+import { News } from './component/News'
+import LoadingBar from 'react-top-loading-bar'
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,25 +9,35 @@ import {
 } from "react-router-dom";
 
 export class App extends Component {
-  pageSize=9;
-  country='in';
+  pageSize = 9;
+  country = 'in';
+  state = {
+    progress: 10
+  }
+  setProgress=(progress)=>{
+    this.setState({progress:progress})
+  }
   render() {
     return (
 
       <div>
         <Router>
-        <div><Navbar />
-        </div>
-        <Routes>
-          <Route path="/" element={<News key="general" country={this.country} category={'general'} pageSize={this.pageSize} />} />
-          <Route path="/business" element={<News key="business" country={this.country} category={'business'} pageSize={this.pageSize} />} />
-          <Route path="/sports" element={<News key="sports" country={this.country} category={'sports'} pageSize={this.pageSize} />} />
-          <Route path="/science" element={<News key="science" country={this.country} category={'science'} pageSize={this.pageSize} />} />
-          <Route path="/technology" element={<News key="technology" country={this.country} category={'technology'} pageSize={this.pageSize} />} />
-          <Route path="/entertainment" element={<News key="entertainment" country={this.country} category={'entertainment'} pageSize={this.pageSize} />} />
-          <Route path="/health" element={<News key="health" country={this.country} category={'health'} pageSize={this.pageSize} />} />
-        </Routes>
-      </Router>
+          <LoadingBar
+            color='#f11946'
+            progress={this.state.progress}
+          />
+          <div><Navbar />
+          </div>
+          <Routes>
+            <Route path="/" element={<News setProgress={this.setProgress} key="general" country={this.country} category={'general'} pageSize={this.pageSize} />} />
+            <Route path="/business" element={<News setProgress={this.setProgress} key="business" country={this.country} category={'business'} pageSize={this.pageSize} />} />
+            <Route path="/sports" element={<News setProgress={this.setProgress} key="sports" country={this.country} category={'sports'} pageSize={this.pageSize} />} />
+            <Route path="/science" element={<News setProgress={this.setProgress} key="science" country={this.country} category={'science'} pageSize={this.pageSize} />} />
+            <Route path="/technology" element={<News setProgress={this.setProgress} key="technology" country={this.country} category={'technology'} pageSize={this.pageSize} />} />
+            <Route path="/entertainment" element={<News setProgress={this.setProgress} key="entertainment" country={this.country} category={'entertainment'} pageSize={this.pageSize} />} />
+            <Route path="/health" element={<News setProgress={this.setProgress} key="health" country={this.country} category={'health'} pageSize={this.pageSize} />} />
+          </Routes>
+        </Router>
 
 
       </div>
